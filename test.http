@@ -1,0 +1,262 @@
+### 🔹 Criar usuário
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Clarinha",
+  "email": "clara@email.com",
+  "password": "123456",
+  "plan": "premium"
+}
+
+###
+### 🔹 Criar perfil
+POST http://localhost:3000/profiles
+Content-Type: application/json
+
+{
+  "user": "ID_DO_USER", 
+  "name": "Perfil 1",
+  "ageLimit": 16
+}
+
+###
+
+### 🔹 Criar categoria
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "name": "Ação"
+}
+
+###
+
+### 🔹 Criar conteúdo
+POST http://localhost:3000/contents
+Content-Type: application/json
+
+{
+  "title": "Conteúdo Exemplo",
+  "description": "Descrição do conteúdo",
+  "category": "ID_DA_CATEGORIA"
+}
+
+###
+
+### 🔹 Criar filme
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "Filme Exemplo",
+  "duration": 120,
+  "content": "ID_DO_CONTENT"
+}
+
+###
+
+### 🔹 Criar série
+POST http://localhost:3000/series
+Content-Type: application/json
+
+{
+  "title": "Série Exemplo",
+  "seasons": 3,
+  "content": "ID_DO_CONTENT"
+}
+
+###
+
+### 🔹 Criar episódio
+POST http://localhost:3000/episodes
+Content-Type: application/json
+
+{
+  "title": "Episódio 1",
+  "duration": 45,
+  "series": "ID_DA_SERIE"
+}
+
+###
+
+### 🔹 Criar avaliação
+POST http://localhost:3000/ratings
+Content-Type: application/json
+
+{
+  "content": "ID_DO_CONTENT",
+  "profile": "ID_DO_PROFILE",
+  "score": 5,
+  "comment": "Muito bom!"
+}
+
+###
+
+### 🔎 Buscar todos os usuários
+GET http://localhost:3000/users
+
+###
+
+### 🔎 Buscar todos os perfis
+GET http://localhost:3000/profiles
+
+###
+
+### 🔎 Buscar todas as categorias
+GET http://localhost:3000/categories
+
+###
+
+### 🔎 Buscar todos os conteúdos
+GET http://localhost:3000/contents
+
+###
+
+### 🔎 Buscar todos os filmes
+GET http://localhost:3000/movies
+
+###
+
+### 🔎 Buscar todas as séries
+GET http://localhost:3000/series
+
+###
+
+### 🔎 Buscar todos os episódios
+GET http://localhost:3000/episodes
+
+###
+
+### 🔎 Buscar todas as avaliações
+GET http://localhost:3000/ratings
+
+### 🔄 Atualizar usuário
+PUT http://localhost:3000/users/ID_DO_USER
+Content-Type: application/json
+
+{
+  "name": "Clarinha Atualizada",
+  "plan": "Standard"
+}
+
+###
+
+### ❌ Deletar usuário
+DELETE http://localhost:3000/users/ID_DO_USER
+
+###
+
+### 🔄 Atualizar perfil
+PUT http://localhost:3000/profiles/ID_DO_PROFILE
+Content-Type: application/json
+
+{
+  "name": "Perfil Atualizado",
+  "ageLimit": 18
+}
+
+###
+
+### ❌ Deletar perfil
+DELETE http://localhost:3000/profiles/ID_DO_PROFILE
+
+###
+
+### 🔄 Atualizar categoria
+PUT http://localhost:3000/categories/ID_DA_CATEGORIA
+Content-Type: application/json
+
+{
+  "name": "Drama"
+}
+
+###
+
+### ❌ Deletar categoria
+DELETE http://localhost:3000/categories/ID_DA_CATEGORIA
+
+###
+
+### 🔄 Atualizar conteúdo
+PUT http://localhost:3000/contents/ID_DO_CONTENT
+Content-Type: application/json
+
+{
+  "title": "Conteúdo Atualizado",
+  "description": "Nova descrição",
+  "category": "ID_DA_CATEGORIA"
+}
+
+###
+
+### ❌ Deletar conteúdo
+DELETE http://localhost:3000/contents/ID_DO_CONTENT
+
+###
+
+### 🔄 Atualizar filme
+PUT http://localhost:3000/movies/ID_DO_MOVIE
+Content-Type: application/json
+
+{
+  "title": "Filme Atualizado",
+  "duration": 100,
+  "content": "ID_DO_CONTENT"
+}
+
+###
+
+### ❌ Deletar filme
+DELETE http://localhost:3000/movies/ID_DO_MOVIE
+
+###
+
+### 🔄 Atualizar série
+PUT http://localhost:3000/series/ID_DA_SERIE
+Content-Type: application/json
+
+{
+  "title": "Série Atualizada",
+  "seasons": 4,
+  "content": "ID_DO_CONTENT"
+}
+
+###
+
+### ❌ Deletar série
+DELETE http://localhost:3000/series/ID_DA_SERIE
+
+###
+
+### 🔄 Atualizar episódio
+PUT http://localhost:3000/episodes/ID_DO_EPISODE
+Content-Type: application/json
+
+{
+  "title": "Episódio Atualizado",
+  "duration": 50,
+  "series": "ID_DA_SERIE"
+}
+
+###
+
+### ❌ Deletar episódio
+DELETE http://localhost:3000/episodes/ID_DO_EPISODE
+
+###
+
+### 🔄 Atualizar avaliação
+PUT http://localhost:3000/ratings/ID_DA_RATING
+Content-Type: application/json
+
+{
+  "score": 4,
+  "comment": "Atualizei minha opinião"
+}
+
+###
+
+### ❌ Deletar avaliação
+DELETE http://localhost:3000/ratings/ID_DA_RATING
+
