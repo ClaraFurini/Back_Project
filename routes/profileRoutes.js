@@ -1,52 +1,75 @@
-const express = require('express');
-const router = express.Router();
 const logger = require('../logger');
-const profileService = require('../services/profileService');
+const Profile = require('../models/Profile');
+const User = require('../models/User');
 
-router.post('/', async (req, res) => {
+const createProfile = async (profileData) => {
   try {
-    const novoProfile = await profileService.createProfile(req.body);
-    res.status(201).json(novoProfile);
+    const profile = new Profile(profileData);
+    const savedProfile = await profile.save();
+
+    // Adiciona o ID do perfil ao array profiles do usuário
+    await User.findByIdAndUpdate(
+      profile.user,
+      { $push: { profiles: savedProfile._id } },
+      { new: true }
+    );
+
+    return savedProfile;
   } catch (err) {
     logger.error(err.message, { stack: err.stack });
-    res.status(400).json({ error: err.message });
-  }
-});
 
-router.get('/', async (req, res) => {
-  try {
-    const profiles = await profileService.getAllProfiles();
-    res.json(profiles);
-  } catch (err) {
-    logger.error(err.message, { stack: err.stack });
-    res.status(500).json({ error: err.message });
-  }
-});
-
-router.get('/:id', async (req, res) => {
-  try {
-    const profile = await profileService.getProfileById(req.params.id);
-    if (!profile) {
-      return res.status(404).json({ error: 'Profile não encontrado' });
+    // Erro de validação do Mongoose
+    if (err.name === 'ValidationError') {
+      const messages = Object.values(err.errors).map(e => e.message);
+      const error = new Error(messages.join(', '));
+      error.status = 400;
+      throw error;
     }
-    res.json(profile);
-  } catch (err) {
-    logger.error(err.message, { stack: err.stack });
-    res.status(500).json({ error: err.message });
-  }
-});
 
-router.delete('/:id', async (req, res) => {
+    throw err;
+  }
+};
+
+const getAllProfiles = async () => {
   try {
-    const deletado = await profileService.deleteProfile(req.params.id);
-    if (!deletado) {
-      return res.status(404).json({ error: 'Profile não encontrado' });
-    }
-    res.sendStatus(204);
+    return await Profile.find().populate('user');
   } catch (err) {
     logger.error(err.message, { stack: err.stack });
-    res.status(500).json({ error: err.message });
+    throw err;
   }
-});
+};
 
-module.exports = router;
+const getProfileById = async (id) => {
+  try {
+    return await Profile.findById(id).populate('user');
+  } catch (err) {
+    logger.error(err.message, { stack: err.stack });
+    throw err;
+  }
+};
+
+const deleteProfile = async (id) => {
+  try {
+    const deletedProfile = await Profile.findByIdAndDelete(id);
+
+    if (deletedProfile) {
+      // Remove o ID do perfil do array profiles do usuário
+      await User.findByIdAndUpdate(
+        deletedProfile.user,
+        { $pull: { profiles: deletedProfile._id } }
+      );
+    }
+
+    return deletedProfile;
+  } catch (err) {
+    logger.error(err.message, { stack: err.stack });
+    throw err;
+  }
+};
+
+module.exports = {
+  createProfile,
+  getAllProfiles,
+  getProfileById,
+  deleteProfile,
+};

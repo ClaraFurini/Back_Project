@@ -15,8 +15,8 @@ POST http://localhost:3000/profiles
 Content-Type: application/json
 
 {
-  "user": "ID_DO_USER", 
-  "name": "Perfil 1",
+  "user": "68423c50f3b5ec90ae174831", 
+  "name": "Perfil 3",
   "ageLimit": 16
 }
 
